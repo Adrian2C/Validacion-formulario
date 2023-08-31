@@ -18,7 +18,7 @@ Manual de uso
 <li>//se inserta una verificacion si el dato insertado concuerda cno el patron del regex</li>
 <li>//al final, se confirma si esta todo bien, se envia un alert, y se resetea el formulario</li>
 </ul>
-//-----------------------------------
+
 <hr>
 //manual para Firebase
 <ul>
