@@ -31,20 +31,15 @@
 //y se copia la firebase configuration, y se pega en los datos que se puseron en el top del form
 
 //y quedo listo, ahora todos los datos guardados van a ir al form
-
-import firebase from "firebase/app";
-import "firebase/firestore";
-
-// TODO: Replace the following with your app's Firebase project configuration
-// See: https://support.google.com/firebase/answer/7015592
 const firebaseConfig = {
-  apiKey: "AIzaSyDddOKzG9COpPHRayp9SUC-9PD0R5eYME8",
-  authDomain: "form-sergie.firebaseapp.com",
-  projectId: "form-sergie",
-  storageBucket: "form-sergie.appspot.com",
-  messagingSenderId: "121789437359",
-  appId: "1:121789437359:web:e005d7ee2214df8d428b5a",
-};
+  apiKey: 'AIzaSyDquHkI8IdjNQ7Io34fDLEzoXiuCbFxSS8',
+  authDomain: 'datos-de-formulario-6f8f6.firebaseapp.com',
+  projectId: 'datos-de-formulario-6f8f6',
+  storageBucket: 'datos-de-formulario-6f8f6.appspot.com',
+  messagingSenderId: '1081466986368',
+  appId: '1:1081466986368:web:b0d4c6994b582728fcab65',
+  measurementId: 'G-5RDZ68NR84'
+}
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
@@ -52,67 +47,63 @@ firebase.initializeApp(firebaseConfig);
 // Initialize Cloud Firestore and get a reference to the service
 const db = firebase.firestore();
 
-document.getElementById("formulario").addEventListener("submit", (event) => {
-  event.preventDefault(); //esto evita que al apretar submit se borre todo y se actualize la pagina
+/* ------------script de formulario ------------*/
+document.getElementById('formulario').addEventListener('submit', (event) => {
+  event.preventDefault() //esto evita que al apretar submit se borre todo y se actualize la pagina
 
   //validar campo nombre
-  let entradaNombre = document.getElementById-("name"); //llamo a las dos variables
-  let errorNombre = document.getElementById("nameError");
+  let entradaNombre = document.getElementById('name') //llamo a las dos variables
+  let errorNombre = document.getElementById('nameError')
 
-  if (entradaNombre.value.trim() === "") {
-    //en caso que el nombre este vacio
+  if (entradaNombre.value.trim() === '') {//en caso que el nombre este vacio
     errorNombre.textContent = "Por favor, introduci tu nombre"; //envio un mensaje de error
     errorNombre.classList.add("error-message"); //añado el mensaje
   } else {
     //caso contrario
-    errorNombre.textContent = "";
-    errorNombre.classList.remove("error-message"); //se elimina el mensaje de alerta
+    errorNombre.textContent = ''
+    errorNombre.classList.remove('error-message') //se elimina el mensaje de alerta
   }
   //validar correo electronico
-  let emailEntrada = document.getElementById("email");
-  let emailError = document.getElementById("emailError");
+  let emailEntrada = document.getElementById('email')
+  let emailError = document.getElementById('emailError')
   let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailPattern.test(emailEntrada.value)) {
-    emailError.textContent = "por favor, introduci un email valido";
-    emailError.classList.add("error-message");
+    emailError.textContent = 'por favor, introduci un email valido'
+    emailError.classList.add('error-message')
   } else {
-    emailError.textContent = "";
-    emailError.classList.remove("error-message");
+    emailError.textContent = ''
+    emailError.classList.remove('error-message')
   }
   //validar la contraseña
-  let contrasenaEntrada = document.getElementById("password");
-  let contrasenaError = document.getElementById("passwordError");
+  let contrasenaEntrada = document.getElementById('password')
+  let contrasenaError = document.getElementById('passwordError')
   let contrasenaPattern =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,15}$/;
-  if (!contrasenaPattern.test(contrasenaEntrada.value)) {
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,15}$/
+  if(!contrasenaPattern.test(contrasenaEntrada.value)) {
     contrasenaError.textContent =
-      "la contrasena debe tener al menos 8 caracteres, numeros, mayusculas ,minusculas y caracteres especiales";
-    contrasenaError.classList.add("error-message");
+      'la contrasena debe tener al menos 8 caracteres, numeros, mayusculas ,minusculas y caracteres especiales'
+    contrasenaError.classList.add('error-message')
   } else {
-    contrasenaError.textContent = "";
-    contrasenaError.classList.remove("error-message");
+    contrasenaError.textContent = ''
+    contrasenaError.classList.remove('error-message')
   }
   //si todos los campos son validos enviar fomulario
 
-  if (
-    !errorNombre.textContent &&
-    !emailError.textContent &&
-    !contrasenaError.textContent
-  ) {
+  if (!errorNombre.textContent && !emailError.textContent && !contrasenaError.textContent) {
     //BACKEND QUE RECIBA LA INFO
-
-    db.collection("users")
-      .add({
+    db.collection("users").add({
         nombre: entradaNombre.value,
         email: emailEntrada.value,
-        password: contrasenaEntrada.value,
+        password: contrasenaEntrada.value
       })
       .then((docRef) => {
-        alert("El formulario se ha enviado con exito", docRef.id);
-        document.getElementById("formulario").reset();
+        console.log('Document written with ID: ', docRef.id);
       })
       .catch((error) => {
-        alert(error);
+        console.error('Error adding document: ', error);
       });
+
+    alert('el formulario se ha enviado con exito')
+    document.getElementById('formulario').reset();
   }
-});
+})
